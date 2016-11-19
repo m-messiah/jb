@@ -1,0 +1,10 @@
+daemonize yes
+bind {{ansible_default_ipv4['address']}}
+port 6379
+logfile /var/log/redis/redis.log
+pidfile /var/run/redis.pid
+save 900 5
+save 300 2
+save 60  1
+dbfilename db.rdb
+dir /var/lib/redis/

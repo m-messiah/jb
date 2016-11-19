@@ -1,0 +1,3 @@
+---
+redis_path: /etc
+redis_package: redis
