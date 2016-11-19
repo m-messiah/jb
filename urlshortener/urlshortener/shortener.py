@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, abort, redirect, url_for
 from redis.sentinel import Sentinel
 app = Flask(__name__)
-app.sentinel = Sentinel([('localhost', 26379)], socket_timeout=0.1)
+app.sentinel = Sentinel([('192.168.100.9', 26379)], socket_timeout=0.1)
 app.store = app.sentinel.master_for('mymaster', socket_timeout=0.1)
 
 ID = 0

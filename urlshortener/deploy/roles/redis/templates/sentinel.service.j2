@@ -3,7 +3,6 @@ Description=Sentinel for Advanced key-value store
 After=network.target
 
 [Service]
-Type=forking
 ExecStart=/usr/bin/redis-sentinel /etc/redis/sentinel.conf
 Restart=always
 User=redis

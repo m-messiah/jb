@@ -7,7 +7,7 @@
 - name: install redis package
   package: name={{redis_package}}
 - name: copy configs
-  template: src={{ item }}.j2 dest={{redis_path}}/{{ item }}.conf
+  template: src={{ item }}.j2 dest={{redis_path}}/{{ item }}.conf owner=redis group=redis
   with_items:
     - redis
     - sentinel
