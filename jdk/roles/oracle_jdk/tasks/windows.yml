@@ -1,0 +1,6 @@
+---
+- name: Download jdk
+  win_package:
+    path="http://download.oracle.com/otn-pub/java/jdk/{{ java_version }}u{{ jdk_version }}-{{ jdk_build }}/jdk-{{ java_version }}u{{ jdk_version }}-windows-x64.exe"
+    product_id="{64A3A4F4-B79211D6-A78A-00B0D0180111}"
+    Arguments="/s"

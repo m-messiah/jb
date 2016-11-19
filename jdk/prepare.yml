@@ -1,0 +1,5 @@
+---
+- name: Deploy jdk
+  hosts: agents
+  roles:
+    - oracle_jdk
