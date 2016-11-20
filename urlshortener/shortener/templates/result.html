@@ -1,11 +1,7 @@
-<html>
-    <head>
-        <title>Url Shortener</title>
-    </head>
-    <body>
-        <div>
-            <p>You shortened url: {{ url }}</p>
-            <a href="{{ url }}">try it</a>
-        </div>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Your url</p>
+    <p class="shortened-url">{{ url }}</p>
+    <a href="{{ url }}">Try it</a>
+{% endblock %}
