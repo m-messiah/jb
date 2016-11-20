@@ -1,0 +1,7 @@
+---
+- name: Choose system-wide jdk
+  hosts: ubuntu
+  tasks:
+    - name: Choose java
+      alternatives: link=/usr/bin/java name=java path=/usr/lib/jvm/java-{{ java }}/jre/bin/java
+      when: java is defined
