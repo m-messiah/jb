@@ -1,6 +1,9 @@
 ---
-- name: Download jdk
+- name: Copy jdk installer
+  win_copy: src="{{ jdk_exe }}" dest="C:\\jdk-{{ java_version }}u{{ jdk_version }}-windows-x64.exe"
+- name: Install jdk
   win_package:
-    path="http://download.oracle.com/otn-pub/java/jdk/{{ java_version }}u{{ jdk_version }}-{{ jdk_build }}/jdk-{{ java_version }}u{{ jdk_version }}-windows-x64.exe"
-    product_id="{64A3A4F4-B79211D6-A78A-00B0D0180111}"
-    Arguments="/s"
+    path: "C:\\jdk-{{ java_version }}u{{ jdk_version }}-windows-x64.exe"
+    product_id: "{{ jdk_id }}"
+    arguments: '/s ADDLOCAL="ToolsFeature,SourceFeature,PublicjreFeature"'
+

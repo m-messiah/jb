@@ -2,4 +2,5 @@
 - name: Deploy jdk
   hosts: agents
   roles:
+    - open_jdk
     - oracle_jdk
