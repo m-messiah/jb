@@ -4,6 +4,13 @@
 - name: Add java repo
   apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main' state=present update_cache=yes
 - name: License agree
-  debconf: name=oracle-java8-installer question="shared/accepted-oracle-license-v1-1" value='true' vtype='select'
+  debconf: name=oracle-java{{ java_version }}-installer question="shared/accepted-oracle-license-v1-1" value='true' vtype='select'
 - name: Install java-package
   apt: name=oracle-java{{ java_version }}-installer
+- name: Fetch Java version
+  shell: java -version
+  register: installed_java_version
+- assert:
+    msg: "Incorrect java version found: {{ installed_java_version.stderr }}"
+    that:
+      - "java_version in installed_java_version.stderr"

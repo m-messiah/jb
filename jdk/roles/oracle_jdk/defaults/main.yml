@@ -1,5 +1,4 @@
 ---
 java_version: 8
-jdk_version: 111
-jdk_build: b14
-jdk_id: "{64A3A4F4-B792-11D6-A78A-00B0D0180111}"
+java_build: 111
+product_id: "{64A3A4F4-B792-11D6-A78A-00B0D01{{ java_version }}0{{ java_build }}}"

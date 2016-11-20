@@ -1,9 +1,16 @@
 ---
 - name: Copy jdk installer
-  win_copy: src="{{ jdk_exe }}" dest="C:\\jdk-{{ java_version }}u{{ jdk_version }}-windows-x64.exe"
+  win_copy: src="{{ jdk_exe }}" dest="C:\\{{ jdk_exe | win_basename }}"
 - name: Install jdk
   win_package:
-    path: "C:\\jdk-{{ java_version }}u{{ jdk_version }}-windows-x64.exe"
-    product_id: "{{ jdk_id }}"
+    path: "C:\\{{ jdk_exe | win_basename }}"
+    product_id: "{{ product_id }}"
     arguments: '/s ADDLOCAL="ToolsFeature,SourceFeature,PublicjreFeature"'
-
+- name: Get installed java version
+  win_command: '"C:\\Program Files\\Java\\jdk1.{{ java_version }}.0_{{ java_build }}\\bin\\java" -version'
+  register: installed_java_version
+- assert:
+    msg: "Incorrect java version found: {{ installed_java_version.stderr }}"
+    that:
+      - "java_version in installed_java_version.stderr"
+      - "java_build in installed_java_version.stderr"
