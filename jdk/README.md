@@ -27,6 +27,8 @@ e.t.c
 
 Для работы ansible с windows необходимо разрешить winrm на порту 5986 для удаленного управления через PowerShell (например, с помощью предоставленного ansible [powershell скрипта](https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1)) и на управляющей системе установить пакет pywinrm (`pip install pywinrm`)
 
+> Чтобы эти настройки применлись на Windows 7, требуется обновить Powershell до версии 3. (например с помощью [скрипта](https://github.com/ansible/ansible/blob/devel/examples/scripts/upgrade_to_ps3.ps1), (требуется .NET4) )
+
 С Oracle часто возникают различные проблемы, в частности, не принимаются Cookie соглашения с лицензией, либо облако просто не позволяет скачивать, даже если всё в порядке.
 
 Так что, для гарантии успеха деплоя, единожды скачиваем требуемый jdk-...windows-x...exe на управляющую систему и рассылаем файл с неё.
