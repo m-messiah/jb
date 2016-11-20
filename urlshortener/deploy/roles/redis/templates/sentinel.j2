@@ -1,6 +1,6 @@
 port 26379
 dir /tmp
-sentinel monitor mymaster {{ansible_default_ipv4['address']}} 6379 2
-sentinel down-after-milliseconds mymaster 30000
+sentinel monitor mymaster {{ hostvars[groups['redis'][0]]['ansible_eth0']['ipv4']['address'] }} 6379 2
+sentinel down-after-milliseconds mymaster 5000
 sentinel parallel-syncs mymaster 1
 sentinel failover-timeout mymaster 180000

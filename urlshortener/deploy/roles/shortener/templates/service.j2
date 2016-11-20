@@ -1,0 +1,10 @@
+[Unit]
+Description=uWSGI
+After=syslog.target
+[Service]
+ExecStart=/home/shortener/venv/bin/uwsgi /home/shortener/uwsgi.ini
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+[Install]
+WantedBy=multi-user.target

@@ -1,5 +1,4 @@
 daemonize yes
-bind {{ansible_default_ipv4['address']}}
 port 6379
 
 logfile /var/log/redis/redis.log
@@ -9,3 +8,7 @@ save 300 2
 save 60  1
 dbfilename db.rdb
 dir /var/lib/redis/
+
+{% if inventory_hostname != groups['redis'][0] %}
+slaveof {{ hostvars[groups['redis'][0]]['ansible_eth0']['ipv4']['address'] }} 6379
+{% endif %}

@@ -1,0 +1,21 @@
+---
+- name: Create user
+  user: name=shortener
+- name: Copy service
+  copy: dest=/home/shortener/ src="{{ playbook_dir }}/../shortener/" owner=shortener group=shortener
+- name: Create venv
+  become: yes
+  become_user: shortener
+  pip: name={{ item }} virtualenv=/home/shortener/venv
+  with_items:
+    - pip
+    - setuptools
+    - wheel
+    - uwsgi
+- name: Install Requirements.
+  become: yes
+  become_user: "shortener"
+  pip: requirements=/home/shortener/requirements.txt state=latest virtualenv=/home/shortener/venv
+- name: Install service
+  template: src=service.j2 dest=/etc/systemd/system/multi-user.target-wants/shortener.service
+  notify: restart shortener

@@ -1,6 +1,6 @@
 ---
 - name: Deploy service
-  hosts: all
+  hosts: service
   roles:
     - redis
-    #- urlshortener
+    - shortener
