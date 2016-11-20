@@ -1,3 +1,11 @@
 ---
-- name: restart shortener
-  systemd: name=shortener daemon_reload=yes state=restarted
+- name: restart uwsgi
+  service: name=uwsgi state=restarted
+  notify: check service
+
+- name: check service
+  uri:
+    url: "http://localhost:8000"
+    method: POST
+    body: "url=http:%2F%2Fgoogle.com"
+    HEADER_Content-Type: "application/x-www-form-urlencoded"

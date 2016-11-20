@@ -1,0 +1,11 @@
+---
+- name: install nginx package
+  package: name=nginx
+- name: copy global config
+  template: src=nginx.j2 dest=/etc/nginx/nginx.conf
+  notify: nginx restart
+- name: copy vhost config
+  template: src=vhost.j2 dest=/etc/nginx/conf.d/service.conf
+  notify: nginx restart
+- name: nginx start
+  service: name=nginx state=started

@@ -1,6 +1,16 @@
 ---
 - name: Deploy service
   hosts: service
+  serial:
+    - 1
+    - "100%"
   roles:
     - redis
     - shortener
+- name: Front
+  hosts: front
+  serial:
+    - 1
+    - "100%"
+  roles:
+    - nginx

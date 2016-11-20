@@ -10,7 +10,7 @@ app.store = app.sentinel.master_for('mymaster', socket_timeout=0.1)
 def get_code():
     num = int(uuid4())
     alphabet = ("0123456789abcdefghijklmnopqrstuvwxyz"
-                " ABCDEFGHIJKLMNOPQRSTUVWXYZ-_")
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ-_")
     if num == 0:
         return alphabet[0]
     arr = []
@@ -25,17 +25,24 @@ def get_code():
     return code
 
 
+def store_url(url):
+    code = get_code()
+    if not app.store.setnx(code, url):
+        return store_url(url)
+    return code
+
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     global ID
     if request.method == "POST":
         if 'url' not in request.form:
             abort(400)
-
-        code = get_code()
-
-        app.store.set(code, request.form['url'])
-        return render_template("result.html", url=request.url + code)
+        try:
+            code = store_url(request.form['url'])
+            return render_template("result.html", url=request.url + code)
+        except RuntimeError:
+            return abort(500)
     return render_template("index.html")
 
 
