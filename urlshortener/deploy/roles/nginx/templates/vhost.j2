@@ -7,7 +7,7 @@ upstream service_backends {
 server {
     listen  80;
     server_name {{ domain_name }};
-    proxy_next_upstream error timeout http_503;
+    proxy_next_upstream error timeout http_503 http_500;
     access_log  /var/log/nginx/service.log long;
     location / {
         proxy_set_header            X-Forwarded-Proto $scheme;

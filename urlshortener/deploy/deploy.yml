@@ -1,4 +1,15 @@
 ---
+- name: Install ansible dependencies
+  hosts: all
+  tasks:
+    - name: Install python if needed Debian
+      raw: "test -e /usr/bin/python || (apt-get -y update && apt-get install -y python)"
+      changed_when: False
+      when: ansible_os_family == "Debian"
+    - name: Install python if needed RedHat
+      raw: "test -e /usr/bin/python || yum install -y python"
+      changed_when: False
+      when: ansible_os_family == "RedHat"
 - name: Deploy service
   hosts: service
   serial:
