@@ -1,0 +1,2 @@
+---
+openjdk_package: openjdk-{{ openjdk_version }}-jdk

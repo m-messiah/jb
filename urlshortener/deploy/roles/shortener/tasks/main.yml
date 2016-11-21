@@ -11,18 +11,10 @@
 - name: Copy service
   copy: dest=/home/{{ project_user }}/ src="{{ playbook_dir }}/../shortener/" owner={{ project_user }} group={{ project_user }}
   notify: restart uwsgi
-- name: Create venv
-  become: yes
-  become_user: "{{ project_user }}"
-  pip: name={{ item }} virtualenv=/home/{{ project_user }}/venv state=latest
-  with_items:
-    - pip
-    - setuptools
-    - wheel
 - name: Install Requirements.
   become: yes
   become_user: "{{ project_user }}"
-  pip: requirements=/home/{{ project_user }}/requirements.txt state=latest virtualenv=/home/{{ project_user }}/venv
+  pip: requirements=/home/{{ project_user }}/requirements.txt virtualenv=/home/{{ project_user }}/venv
   notify: restart uwsgi
 - name: Install uwsgi conf
   template: src=shortener.j2 dest=/etc/uwsgi/apps-available/{{ project_name }}.ini

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, request, abort, redirect, url_for
-from redis.sentinel import Sentinel
 from uuid import uuid4
+
+from flask import Flask, abort, redirect, render_template, request
+from redis.sentinel import Sentinel
+
 app = Flask(__name__)
 app.sentinel = Sentinel([('127.0.0.1', 26379)], socket_timeout=0.1)
 app.store = app.sentinel.master_for('mymaster', socket_timeout=0.1)

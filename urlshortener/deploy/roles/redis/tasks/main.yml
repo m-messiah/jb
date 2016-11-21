@@ -1,5 +1,6 @@
 ---
-- include_vars: "{{ item }}"
+- name: Determine redis package name
+  include_vars: "{{ item }}"
   with_first_found:
     - "../vars/{{ ansible_os_family }}.yml"
     - "../vars/Debian.yml"
