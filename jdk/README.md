@@ -28,16 +28,16 @@ e.t.c
 Для работы ansible с windows необходимо разрешить winrm на порту 5986 для удаленного управления через PowerShell (например, с помощью предоставленного ansible [powershell скрипта](https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1)) и на управляющей системе установить пакет pywinrm (`pip install pywinrm`)
 
 > Чтобы эти настройки применлись на Windows 7, требуется обновить Powershell до версии 3. (например с помощью [скрипта](https://github.com/ansible/ansible/blob/devel/examples/scripts/upgrade_to_ps3.ps1), (требуется .NET4) )
+> У меня служба обновлений Windows 7 долго не работала, пока не поставил пакет Windows6.1-KB3172605-x64
+> После того, как поставлен PS3 - работать так же, как и с win 10
 
-С Oracle часто возникают различные проблемы, в частности, не принимаются Cookie соглашения с лицензией, либо облако просто не позволяет скачивать, даже если всё в порядке.
+Для установки oracle java необходимо указать версию java, версию jdk и номер билда:
 
-Так что, для гарантии успеха деплоя, единожды скачиваем требуемый jdk-...windows-x...exe на управляющую систему и рассылаем файл с неё.
+    ansible-playbook prepare.yml -e java_version=8 -e java_build=111 -e java_internal_build=14
 
-    ansible-playbook prepare.yml -e jdk_exe="~/Downloads/jdk-8u111-windows-x64.exe" -e java_version=8 -e java_build=111
-
-В вышеприведенном примере у нас есть скачанный jdk для java8 билд 111, который копируется на хост в C:\, после чего устанавливается.
+В вышеприведенном примере скачается jdk-8u111-windows-x64.exe (b14) на хост в C:\, после чего устанавливится.
 
 Чтобы один и тот же jdk не устанавливался несколько раз, используется product_id (по умолчанию прописан для jdk-8u111-windows-x64.exe, так что его в этом примере можно не указывать)
 
-java_version и java_build необходимы для корректной генерации Product_Id для реестра Windows. Вместо них прямо указать `-e product_id="{00....}"` для конкретного пакета jdk.
+java_version и java_build необходимы для корректной генерации ссылки для скачивания и Product_Id для реестра Windows. Можно также прямо указать `-e product_id="{00....}"` для конкретного пакета jdk.
 Product_Id можно увидеть на установленной системе в реестре по пути `HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall`

@@ -1,9 +1,17 @@
 ---
-- name: Copy jdk installer
-  win_copy: src="{{ jdk_exe }}" dest="C:\\{{ jdk_exe | win_basename }}"
+- name: Download jdk
+  win_shell: |
+    $source = "http://download.oracle.com/otn-pub/java/jdk/{{ java_version }}u{{ java_build }}-b{{ java_internal_build }}/jdk-{{ java_version }}u{{ java_build }}-windows-x64.exe"
+    $destination = "C:\jdk-{{ java_version }}u{{ java_build }}-windows-x64.exe"
+    $client = new-object System.Net.WebClient 
+    $cookie = "oraclelicense=accept-securebackup-cookie"
+    $client.Headers.Add([System.Net.HttpRequestHeader]::Cookie, $cookie) 
+    $client.downloadFile($source, $destination)
+  args:
+    creates: "C:\\jdk-{{ java_version }}u{{ java_build }}-windows-x64.exe"
 - name: Install jdk
   win_package:
-    path: "C:\\{{ jdk_exe | win_basename }}"
+    path: "C:\\jdk-{{ java_version }}u{{ java_build }}-windows-x64.exe"
     product_id: "{{ product_id }}"
     arguments: '/s ADDLOCAL="ToolsFeature,SourceFeature,PublicjreFeature"'
 - name: Get installed java version
