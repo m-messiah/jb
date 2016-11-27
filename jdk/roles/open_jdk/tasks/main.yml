@@ -1,10 +1,6 @@
 ---
-- name: Determine openjdk package name
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "../vars/{{ ansible_os_family }}.yml"
-    - "../vars/Debian.yml"
-  when: openjdk_package is not defined
-- name: install open_jdk
-  package: name={{ openjdk_package }}
+- include: linux.yml
   when: 'ansible_os_family != "Windows"'
+
+- include: windows.yml
+  when: 'ansible_os_family == "Windows"'

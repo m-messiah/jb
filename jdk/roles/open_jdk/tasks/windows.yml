@@ -1,0 +1,16 @@
+---
+- name: Download openjdk
+  win_get_url:
+    url: "https://github.com/ojdkbuild/ojdkbuild/releases/download/1.{{ openjdk_version }}.0.{{ openjdk_build }}/java-1.{{ openjdk_version }}.0-openjdk-1.{{ openjdk_version }}.0.{{ openjdk_build }}.b{{ openjdk_internal_build }}.ojdkbuild.windows.x86_64.msi"
+    dest: "C:\\java-1.{{ openjdk_version }}.0-openjdk-1.{{ openjdk_version }}.0.{{ openjdk_build }}.b{{ openjdk_internal_build }}.ojdkbuild.windows.x86_64.msi"
+- name: Install openjdk
+  win_msi:
+    path: "C:\\java-1.{{ openjdk_version }}.0-openjdk-1.{{ openjdk_version }}.0.{{ openjdk_build }}.b{{ openjdk_internal_build }}.ojdkbuild.windows.x86_64.msi"
+    wait: true
+- name: Get installed openjdk java version
+  win_command: '"C:\\Program Files\\\ojdkbuild\\java-1.{{ openjdk_version }}.0-openjdk-1.{{ openjdk_version }}.0.{{ openjdk_build }}\\bin\\java" -version'
+  register: installed_java_version
+- assert:
+    msg: "Incorrect java version found: {{ installed_java_version.stderr }}"
+    that:
+      - "'{{ openjdk_version }}' in installed_java_version.stderr"

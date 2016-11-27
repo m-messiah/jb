@@ -20,5 +20,5 @@
 - assert:
     msg: "Incorrect java version found: {{ installed_java_version.stderr }}"
     that:
-      - "java_version in installed_java_version.stderr"
-      - "java_build in installed_java_version.stderr"
+      - "'{{ java_version }}' in installed_java_version.stderr"
+      - "'{{ java_build }}' in installed_java_version.stderr"

@@ -1,2 +1,4 @@
 ---
-openjdk_version: 7
+openjdk_version: 8
+openjdk_build: 111-1
+openjdk_internal_build: 15
